@@ -1,5 +1,6 @@
 //Author: Joyin Wong
 import java.util.Arrays;
+
 public class ArrayMethods3 
 {
 	public static void main(String[] args) 
@@ -29,23 +30,54 @@ If r > l
 		int right = list.length; //the last position or the right most number.
 		int middle = (left + right)/2; //find the middle to begin splitting in half
 		
+		
 		//base case
 		if (list.length == 1)
 		{
 			return list;
 		}
+		
+		//split the main array into leftArr and rightArr
+		String leftArr[] = Arrays.copyOfRange(list, left, middle);
+		String rightArr[] = Arrays.copyOfRange(list, middle, right);
+		
 		//recursion
-		return (merge(mergeSort(left), mergeSort(right)));
+		return (merge(mergeSort(leftArr), mergeSort(rightArr)));
 	}
 	
 	public static void quickSort(int[] list1, int front, int back)
 	{
-		
+		if(back > front)
+		{
+			int pivot = partition(list1, front, back);
+					
+			//left side
+			quickSort(list1, front, pivot - 1);
+			
+			//right side
+			quickSort(list1, pivot + 1, back);
+		}
 	}
 	
 		public static int partition(int[] list1, int front, int back)
 		{
-		
+			front = 0;
+			back = list1.length;
+			
+			int pivot =list1[0];
+			int i=0;
+			int j=list1[list1.length-1];
+			while(pivot>list1[i])
+			{
+				swapI(list1,pivot,i);
+				i++;
+			}
+			while(pivot<list1[j])
+			{
+				swapI(list1,pivot,j);
+				j--;
+			}
+			return pivot;
 		}
 	
 	
@@ -94,11 +126,7 @@ If r > l
 		return sorted;
 		
 	}
-	//copying the array every time it splits 
-	public static int[] copyOfRange(int[] original_array, int from_index, int to_index)
-	{
-			
-	}
+
 	//swap methods in case i need them
 	public static void swapS(String[] arr, int index1, int index2)
 	{
